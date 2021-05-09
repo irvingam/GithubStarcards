@@ -1,0 +1,24 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Custom Properties */
+:root {
+
+    --ff-primary: 'Ubuntu', sans-serif;
+    --ff-secondary: 'Ubuntu Condensed', sans-serif;
+
+    --fw-pri-bold: 500;
+    --fw-pri-reg: 300;
+    --fw-sec-reg: 400;
+    
+}
+
+
+/* General Styles */
+
+
+/* Class Styles */
