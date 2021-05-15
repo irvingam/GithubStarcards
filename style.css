@@ -150,6 +150,27 @@ main {
     background-color: var(--clr-three);
 }
 
+.starcard_links {
+    text-align: center;
+
+}
+
+.links {
+    text-decoration: none;
+    color: var(--clr-light);
+    font-size: 20px;
+}
+
+.err-msg {
+    color: var(--clr-light);
+    background-color: var(--clr-one);
+    font-family: var(--ff-primary);
+    font-weight: var(--fw-pri-bold);
+    padding: 15px;
+    border-radius: 15px;
+    margin-top: 2em;
+}
+
 /* Mobile Styling */
 
 @media(max-width: 500px) {
