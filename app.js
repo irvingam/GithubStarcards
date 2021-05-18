@@ -23,8 +23,9 @@ button.addEventListener('click', (e) => {
 // gets username object
 async function getUser(username) {
     try {
-        const res = await axios(APIurl + username)
-        createStarcard(res.data)
+        const { data } = await axios(APIurl + username)
+        createStarcard(data)
+        getRepo(username)
     } catch(error) {
         if(error.response.status == 404) {
             createErrorCard('No profile with that username')
@@ -32,6 +33,19 @@ async function getUser(username) {
     }
 }
 
+// fetches repositories of username searched
+async function getRepo(username) {
+    try {
+        const { data } = await axios(APIurl + username + '/repos?sort=created')
+        addRepo(data)
+    } catch(error) {
+        if(error.response.status == 404) {
+            createErrorCard('Problem fetching repos')
+        }
+    }
+}
+
+// creates a starcard for username searched
 function createStarcard (user) {
     const newHTML = `
 <div class="starcard">
@@ -48,11 +62,10 @@ function createStarcard (user) {
             <li>${user.public_repos}<strong>Repos</strong></li>
         </ul>
 
-        <div class="starcard_repos">
-            <a href="" class="repos">Repo 1</a>
-            <a href="" class="repos">Repo 2</a>
-            <a href="" class="repos">Repo 3</a>
-        </div>
+        <div class="starcard_repos" id="repos"></div>
+
+        <div class="profile-links">
+            <a href"${user.html_url}" class="links">Visit Page</a>
     </div>
 </div>`
 
@@ -67,4 +80,21 @@ function createErrorCard (msg) {
         </div>`
 
     main.innerHTML = errorHTML
+}
+
+// adds repos to starcard
+function addRepo(repos) {
+    const reposElement = document.getElementById('repos')
+
+    repos
+        .slice(0, 4) // limits the number of repos to 4
+        .forEach(repo => {
+        const repoElement = document.createElement('a')
+        repoElement.classList.add('repo')
+        repoElement.href = repo.html_url
+        repoElement.target = '_blank'
+        repoElement.innerText = repo.name
+
+        reposElement.appendChild(repoElement)
+    })
 }
